@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Project3</string>
+    <string name="start">START</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="number_of_questions">Number of Questions</string>
+    <string name="division">Division</string>
+    <string name="select_operation">Select operation:</string>
+    <string name="select_difficulty">Select difficulty:</string>
+</resources>
