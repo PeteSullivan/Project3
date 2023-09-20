@@ -7,4 +7,5 @@
     <string name="division">Division</string>
     <string name="select_operation">Select operation:</string>
     <string name="select_difficulty">Select difficulty:</string>
+    <string name="_0_questions_correct">0 questions correct</string>
 </resources>

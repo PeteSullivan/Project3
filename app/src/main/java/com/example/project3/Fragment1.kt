@@ -13,8 +13,9 @@ import androidx.navigation.findNavController
 
 class Fragment1 : Fragment() {
 
+
     var difficulty = "easy"
-    var operation = "addition"
+    var operation = "+"
     var questions = 10
 
     override fun onCreateView(
@@ -36,6 +37,9 @@ class Fragment1 : Fragment() {
         val subtraction = view.findViewById<RadioButton>(R.id.subtractButton)
         val division = view.findViewById<RadioButton>(R.id.divideButton)
 
+        /*
+        buttons change display and internal data storage to be passed
+         */
         questionPlus.setOnClickListener {
             var temp = questionCount.text.toString().toInt() + 1
             questionCount.text = temp.toString()
@@ -49,13 +53,15 @@ class Fragment1 : Fragment() {
         easy.setOnClickListener { difficulty = "easy" }
         medium.setOnClickListener { difficulty = "medium" }
         hard.setOnClickListener { difficulty = "hard" }
-        addition.setOnClickListener { operation = "addition" }
-        multiplication.setOnClickListener { operation = "multiplication" }
-        subtraction.setOnClickListener { operation = "subtraction" }
-        division.setOnClickListener { operation = "division" }
+        addition.setOnClickListener { operation = "+" }
+        multiplication.setOnClickListener { operation = "*" }
+        subtraction.setOnClickListener { operation = "-" }
+        division.setOnClickListener { operation = "/" }
 
 
-
+        /*
+        bundle the main screen data and pass it to the next fragment
+         */
         startButton.setOnClickListener {
             val bundle = bundleOf("difficulty" to difficulty, "operation" to operation, "questions" to questions)
             view.findNavController()
