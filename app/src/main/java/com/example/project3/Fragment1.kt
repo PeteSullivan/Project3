@@ -1,5 +1,8 @@
 package com.example.project3
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +21,7 @@ class Fragment1 : Fragment() {
     var operation = "+"
     var questions = 10
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,6 +29,7 @@ class Fragment1 : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment1, container, false)
         val startButton = view.findViewById<Button>(R.id.startButton)
+        val resultsText = view.findViewById<TextView>(R.id.resultsText)
 
         val questionPlus = view.findViewById<Button>(R.id.questionPlus)
         val questionMinus = view.findViewById<Button>(R.id.questionMinus)
@@ -36,6 +41,33 @@ class Fragment1 : Fragment() {
         val multiplication = view.findViewById<RadioButton>(R.id.multiplyButton)
         val subtraction = view.findViewById<RadioButton>(R.id.subtractButton)
         val division = view.findViewById<RadioButton>(R.id.divideButton)
+
+
+        /*
+        checks for a bundle. if there is one, add the results text on the fragment.
+        if not, leave the text blank.
+         */
+        val correctLastTime = arguments?.getInt("correct")?.toInt() ?: 0
+        val questionsLastTime = arguments?.getInt("questions")?.toInt() ?: 0
+        val operationLastTime = arguments?.getString("operation")
+        if (questionsLastTime != 0) {
+            var str = "You got " + correctLastTime.toString() + " out of " + questionsLastTime.toString() + " correct in "
+            str = when (operationLastTime) {
+                "+" -> str + "addition. "
+                "-" -> str + "subtraction. "
+                "*" -> str + "multiplication. "
+                else -> str + "division. "
+            }
+
+            if (correctLastTime.toDouble() / questionsLastTime.toDouble() < 0.8) {
+                resultsText.text = str + "You need to practice more!"
+                resultsText.setTextColor(Color.parseColor("#ff0000"))
+            } else {
+                resultsText.text = str + "Good work!"
+                resultsText.setTextColor(Color.parseColor("#5A5A5A"))
+            }
+        }
+
 
         /*
         buttons change display and internal data storage to be passed

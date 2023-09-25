@@ -1,6 +1,7 @@
 package com.example.project3
 
 import android.annotation.SuppressLint
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -21,6 +23,8 @@ class Fragment2 : Fragment() {
     var number1 = 0
     var number2 = 0
     var answer = 0
+
+
 
 
     @SuppressLint("SetTextI18n")
@@ -80,16 +84,37 @@ class Fragment2 : Fragment() {
                 "*" -> number1 * number2
                 else -> (number1 / number2).toInt()
             }
+
+            /*
+            depending on if you're correct:
+            add to correct or incorrect
+            play a sound effect
+            send a toast bubble
+             */
             if (input.text.toString().equals(answer.toString())) {
                 correct++
                 scoreButton.text = "$correct questions correct"
+                val correctSound = MediaPlayer.create(context, R.raw.correct)
+                correctSound.start()
+                val text = "Correct. Good work!"
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(this.context, text, duration) // in Activity
+                toast.show()
             }
-            else incorrect++
+            else {
+                incorrect++
+                val incorrectSound = MediaPlayer.create(context, R.raw.wrong)
+                incorrectSound.start()
+                val text = "Wrong"
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(this.context, text, duration) // in Activity
+                toast.show()
+            }
 
 
             if (incorrect + correct == questions) {
-                var bundle = bundleOf("correct" to correct, "questions" to questions)
-                view.findNavController().navigate(R.id.action_fragment2_to_fragment3, bundle)
+                var bundle = bundleOf("correct" to correct, "questions" to questions, "operation" to operation)
+                view.findNavController().navigate(R.id.action_fragment2_to_fragment1, bundle)
             }
             else {
                 number1 = when (difficulty) {
